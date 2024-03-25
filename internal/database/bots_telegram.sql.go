@@ -50,3 +50,19 @@ func (q *Queries) CreateBotTelegram(ctx context.Context, arg CreateBotTelegramPa
 	)
 	return i, err
 }
+
+const selectBotTelegram = `-- name: SelectBotTelegram :one
+SELECT bot_token, chat_id FROM botsTelegram WHERE user_id = $1
+`
+
+type SelectBotTelegramRow struct {
+	BotToken string
+	ChatID   string
+}
+
+func (q *Queries) SelectBotTelegram(ctx context.Context, userID uuid.UUID) (SelectBotTelegramRow, error) {
+	row := q.db.QueryRowContext(ctx, selectBotTelegram, userID)
+	var i SelectBotTelegramRow
+	err := row.Scan(&i.BotToken, &i.ChatID)
+	return i, err
+}

@@ -5,6 +5,7 @@
 package database
 
 import (
+	"database/sql"
 	"time"
 
 	"github.com/google/uuid"
@@ -20,13 +21,32 @@ type Botstelegram struct {
 	UserID    uuid.UUID
 }
 
+type Newselement struct {
+	ID          uuid.UUID
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+	SiteParseID uuid.UUID
+	Title       string
+	NewsDate    string
+	Url         string
+}
+
 type Siteparse struct {
-	ID        uuid.UUID
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	Name      string
-	UrlSite   string
-	Type      string
+	ID            uuid.UUID
+	CreatedAt     time.Time
+	UpdatedAt     time.Time
+	Name          string
+	UrlSite       string
+	Type          string
+	LastFetchedAt sql.NullTime
+}
+
+type Siteparsefollow struct {
+	ID          uuid.UUID
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+	UserID      uuid.UUID
+	SiteParseID uuid.UUID
 }
 
 type User struct {
